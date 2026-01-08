@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      // Jika data login tidak ada, paksa balik ke halaman login
+      if (localStorage.getItem("isLoggedIn") !== "true") {
+        window.location.href = "login.html";
+      }
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arya Yusril – Photography Portfolio</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS untuk Logo -->
+    <style>
+      /* Logo Container Styles */
+      .logo-container {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        gap: 15px;
+        padding: 5px 0;
+      }
+
+      .logo-img {
+        height: 50px;
+        width: auto;
+        object-fit: contain;
+        transition: all 0.3s ease;
+      }
+
+      .logo-text {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .logo-main {
+        font-size: 1.8rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: #6c63ff;
+        background: linear-gradient(90deg, #6c63ff, #8a84ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+      }
+
+      .logo-subtitle {
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 2px;
+        color: #666;
+        text-transform: uppercase;
+        margin-top: 3px;
+      }
+
+      /* Hover Effects */
+      .logo-container:hover .logo-img {
+        transform: scale(1.05);
+      }
+
+      .logo-container:hover .logo-main {
+        background: linear-gradient(90deg, #8a84ff, #6c63ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Responsive Logo */
+      @media (max-width: 768px) {
+        .logo-img {
+          height: 40px;
+        }
+        
+        .logo-main {
+          font-size: 1.4rem;
+        }
+        
+        .logo-subtitle {
+          font-size: 0.6rem;
+          letter-spacing: 1px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .logo-text {
+          display: none;
+        }
+        
+        .logo-img {
+          height: 35px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header id="navbar">
+      <a href="#hero" class="logo-container">
+        <!-- Logo dari file logo.jpeg -->
+        <img
+          src="image/logo.jpeg"
+          alt="Arya Yusril Photography Logo"
+          class="logo-img"
+        />
+        <div class="logo-text">
+          <div class="logo-main">ARYA YUSRIL</div>
+          <div class="logo-subtitle">Photography</div>
+        </div>
+      </a>
+      <nav class="desktop-nav">
+        <a href="#hero">Home</a>
+        <a href="#about">About</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+        <a href="#" onclick="logout()">Logout</a>
+      </nav>
+
+      <button class="menu-toggle" id="menu-toggle">☰</button>
+
+      <nav class="mobile-nav" id="mobile-nav">
+        <a href="#hero">Home</a>
+        <a href="#about">About</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+        <a href="#" onclick="logout()">Logout</a>
+      </nav>
+    </header>
+
+    <!-- Live Chat Bot Widget -->
+    <div class="chatbot-container" id="chatbot-container">
+      <div class="chatbot-header">
+        <h4><i class="fas fa-robot"></i> Arya's Assistant</h4>
+        <button class="chatbot-close" id="chatbot-close">×</button>
+      </div>
+      <div class="chatbot-body" id="chatbot-body">
+        <div class="chat-message bot-message">
+          <div class="message-content">
+            <strong>Arya's Assistant:</strong> Hello! I'm here to help you. You can ask me about photography services, pricing, booking, or view my portfolio. How can I assist you today?
+          </div>
+          <div class="message-time">Just now</div>
+        </div>
+        
+        <!-- Quick Response Buttons -->
+        <div class="quick-responses">
+          <button class="quick-response-btn" data-message="What are your photography services?">📸 Services</button>
+          <button class="quick-response-btn" data-message="How much do you charge?">💰 Pricing</button>
+          <button class="quick-response-btn" data-message="How can I book a session?">📅 Booking</button>
+          <button class="quick-response-btn" data-message="Tell me about your portfolio">🎨 Portfolio</button>
+        </div>
+      </div>
+      <div class="chatbot-input">
+        <input type="text" id="chatbot-input" placeholder="Type your message here..." autocomplete="off">
+        <button id="chatbot-send"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+
+    <!-- Chat Bot Toggle Button -->
+    <div class="chatbot-toggle" id="chatbot-toggle">
+      <i class="fas fa-comments"></i>
+      <span class="notification-badge" id="chat-notification">1</span>
+    </div>
+
+    <section id="hero" class="hero">
+      <div class="hero-content" data-aos="fade-up" data-aos-duration="1200">
+        <h1>Visual Stories Through My Lens</h1>
+        <p>Street & Portrait Photography</p>
+        <a href="#gallery" class="cta-button">View My Work</a>
+      </div>
+    </section>
+
+    <section id="about" class="container about">
+      <h2 data-aos="fade-down">About Me</h2>
+      <div class="about-grid">
+        <div class="profile-pic" data-aos="zoom-in" data-aos-duration="1000">
+          <img src="image/arya.jpg" alt="Arya Yusril Profile Photo" />
+        </div>
+
+        <div class="story-and-skills">
+          <div class="story" data-aos="fade-right">
+            <h3>My Story</h3>
+            <p>
+              I am <strong>Arya Muhamad Yusril</strong>, an Informatics student who sees the world as a blend of logical structure and visual beauty.
+            </p>
+            <p>
+              Through my lens, I capture narratives that cannot be explained by lines of code—from the hustle and bustle of the streets to the tranquility of natural landscapes.
+            </p>
+            <p>
+              As a first-semester Informatics student, I combine visual storytelling with technology, creating images that speak louder than words.
+            </p>
+          </div>
+
+          <div class="skills" data-aos="fade-left" data-aos-delay="400">
+            <h3>Skills & Tools</h3>
+            <span class="skill-tag">Street Photography</span>
+            <span class="skill-tag">Portrait Photography</span>
+            <span class="skill-tag">Landscape Photography</span>
+            <span class="skill-tag">Photo Editing</span>
+            <span class="skill-tag">Snapseed</span>
+            <span class="skill-tag">Adobe Lightroom</span>
+            <span class="skill-tag">Composition</span>
+            <span class="skill-tag">Lighting Techniques</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" class="container gallery">
+      <h2 data-aos="fade-down">Selected Gallery</h2>
+      <p class="gallery-desc" data-aos="fade-up">
+        A curated selection of moments captured from everyday life and nature.
+      </p>
+
+      <div class="filter-buttons" data-aos="zoom-in" data-aos-duration="600">
+        <button class="filter active" data-category="all">All</button>
+        <button class="filter" data-category="nature">Nature</button>
+        <button class="filter" data-category="portrait">Portrait</button>
+        <button class="filter" data-category="landscape">Landscape</button>
+      </div>
+
+      <div class="photo-grid" id="photo-grid">
+        <div
+          class="photo-item open-lightbox"
+          data-category="nature"
+          data-src="image/page3.jpeg"
+          data-caption="Nature: Misty Forest"
+          data-aos="fade-up"
+        >
+          <img src="image/page3.jpeg" alt="Misty Forest" />
+        </div>
+        <div
+          class="photo-item open-lightbox"
+          data-category="nature"
+          data-src="image/page4.jpeg"
+          data-caption="Nature: Sun Rays Through Trees"
+          data-aos="fade-up"
+        >
+          <img src="image/page4.jpeg" alt="Sun Rays Through Trees" />
+        </div>
+        <div
+          class="photo-item open-lightbox"
+          data-category="nature"
+          data-src="image/page8.jpeg"
+          data-caption="Nature: Green Rolling Hills"
+          data-aos="fade-up"
+        >
+          <img src="image/page8.jpeg" alt="Green Rolling Hills" />
+        </div>
+        <div
+          class="photo-item open-lightbox"
+          data-category="nature"
+          data-src="image/page10.jpeg"
+          data-caption="Nature: Wooden Bridge in Forest"
+          data-aos="fade-up"
+        >
+          <img src="image/page10.jpeg" alt="Wooden Bridge in Forest" />
+        </div>
+
+        <div
+          class="photo-item open-lightbox"
+          data-category="portrait"
+          data-src="image/page1.jpeg"
+          data-caption="Portrait: Zulfan Noviandi"
+          data-aos="fade-up"
+        >
+          <img src="image/page1.jpeg" alt="Portrait of Zulfan Noviandi" />
+        </div>
+        <div
+          class="photo-item open-lightbox"
+          data-category="portrait"
+          data-src="image/page6.jpeg"
+          data-caption="Portrait: Rudolf"
+          data-aos="fade-up"
+        >
+          <img src="image/page6.jpeg" alt="Portrait of Rudolf" />
+        </div>
+        <div
+          class="photo-item open-lightbox"
+          data-category="portrait"
+          data-src="image/page5.jpeg"
+          data-caption="Portrait: Fahri"
+          data-aos="fade-up"
+        >
+          <img src="image/page5.jpeg" alt="Portrait of Fahri" />
+        </div>
+        <div
+          class="photo-item open-lightbox"
+          data-category="portrait"
+          data-src="image/page7.jpeg"
+          data-caption="Portrait: Rozak"
+          data-aos="fade-up"
+        >
+          <img src="image/page7.jpeg" alt="Portrait of Rozak" />
+        </div>
+
+        <div
+          class="photo-item open-lightbox"
+          data-category="landscape"
+          data-src="image/page9.jpeg"
+          data-caption="Landscape: Mountain View"
+          data-aos="fade-up"
+        >
+          <img src="image/page9.jpeg" alt="Mountain Landscape" />
+        </div>
+        <div
+          class="photo-item open-lightbox"
+          data-category="landscape"
+          data-src="image/page2.jpeg"
+          data-caption="Landscape: Valley at Dusk"
+          data-aos="fade-up"
+        >
+          <img src="image/page2.jpeg" alt="Valley at Dusk" />
+        </div>
+        <div
+          class="photo-item open-lightbox"
+          data-category="landscape"
+          data-src="image/page13.jpeg"
+          data-caption="Landscape: Sunset Over Field"
+          data-aos="fade-up"
+        >
+          <img src="image/page13.jpeg" alt="Sunset Over Field" />
+        </div>
+        <div
+          class="photo-item open-lightbox"
+          data-category="landscape"
+          data-src="image/page16.jpeg"
+          data-caption="Landscape: Lake House View"
+          data-aos="fade-up"
+        >
+          <img src="image/page16.jpeg" alt="Lake House View" />
+        </div>
+      </div>
+    </section>
+
+    <section id="testimonials" class="container testimonials-section">
+      <h2 data-aos="fade-down">What Clients Say</h2>
+      <p class="section-subtitle" data-aos="fade-up">
+        Here's what happy clients have to say about my work.
+      </p>
+
+      <div class="testimonial-grid">
+        <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+          <img
+            src="image/page5.jpeg"
+            alt="Client 1"
+            class="client-photo"
+          />
+          <p>
+            "Arya perfectly captured the essence of our event. His photos are vibrant and memorable!"
+          </p>
+          <div class="client-info">
+            <h4>Fahri</h4>
+            <span>Event Organizer</span>
+          </div>
+        </div>
+
+        <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+          <img
+            src="image/page6.jpeg"
+            alt="Client 2"
+            class="client-photo"
+          />
+          <p>
+            "Extremely professional and the results exceeded expectations. Highly recommended for professional portraits!"
+          </p>
+          <div class="client-info">
+            <h4>Rudolf</h4>
+            <span>Professional Portrait</span>
+          </div>
+        </div>
+
+        <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+          <img
+            src="image/page7.jpeg"
+            alt="Client 3"
+            class="client-photo"
+          />
+          <p>
+            "The photo quality is exceptional, and Arya was very cooperative during the photoshoot. Will definitely use his services again!"
+          </p>
+          <div class="client-info">
+            <h4>Rozak</h4>
+            <span>Wedding Photography</span>
+          </div>
+        </div>
+
+        <div class="testimonial-card" data-aos="fade-up" data-aos-delay="400">
+          <img
+            src="image/page1.jpeg"
+            alt="Client 4"
+            class="client-photo"
+          />
+          <p>
+            "My travel landscape photos became even more beautiful thanks to Arya's touch. The details are amazing!"
+          </p>
+          <div class="client-info">
+            <h4>Zulfan</h4>
+            <span>Travel Photography</span>
+          </div>
+        </div>
+
+        <div class="testimonial-card" data-aos="fade-up" data-aos-delay="500">
+          <img
+            src="image/page4.jpeg"
+            alt="Client 5"
+            class="client-photo"
+          />
+          <p>
+            "Arya's creativity in choosing angles is very unique. His photos truly tell a story!"
+          </p>
+          <div class="client-info">
+            <h4>Polda Kal-tim</h4>
+            <span>Creative Director</span>
+          </div>
+        </div>
+
+        <div class="testimonial-card" data-aos="fade-up" data-aos-delay="600">
+          <img
+            src="image/page9.jpeg"
+            alt="Client 6"
+            class="client-photo"
+          />
+          <p>
+            "Very satisfied! Arya was very patient in directing poses during the product photoshoot. The results are highly professional."
+          </p>
+          <div class="client-info">
+            <h4>Dellin Intan Puspita Yuliana</h4>
+            <span>Friend in Class</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="container contact">
+      <h2 data-aos="fade-down">Contact Me</h2>
+      <p data-aos="fade-up">
+        For collaboration, inquiries, or to book a photography session, feel free to reach out.
+      </p>
+
+      <div class="contact-info" data-aos="fade-up" data-aos-delay="200">
+        <a
+          href="https://wa.me/+6285750905756"
+          target="_blank"
+          class="contact-link"
+        >
+          <i class="fab fa-whatsapp"></i> WhatsApp: +6285750905756
+        </a>
+        <a href="mailto:aryayusril@email.com" class="contact-link">
+          <i class="fas fa-envelope"></i> Email: aryayusril@email.com
+        </a>
+        <a href="https://instagram.com/arya_yusril" target="_blank" class="contact-link">
+          <i class="fab fa-instagram"></i> Instagram: @arya_yusril
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-logo">
+        <img src="logo.jpeg" alt="Arya Yusril Logo" class="footer-logo-img">
+        <div class="footer-brand">
+          <div class="footer-brand-name">ARYA YUSRIL</div>
+          <div class="footer-brand-subtitle">Photography Portfolio</div>
+        </div>
+      </div>
+      <p>© 2025 Arya Yusril Photography. All rights reserved.</p>
+      <p class="footer-sub">Capturing Moments, Creating Memories</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+      function logout() {
+        localStorage.removeItem("isLoggedIn");
+        window.location.href = "login.html";
+      }
+    </script>
+
+    <a
+      href="https://wa.me/+6285750905756"
+      class="whatsapp-float"
+      target="_blank"
+      ><i class="fab fa-whatsapp"></i></a
+    >
+
+    <div id="lightbox" class="lightbox">
+      <span class="lightbox-close">&times;</span>
+      <div class="lightbox-content">
+        <img src="" alt="Full size view" id="lightbox-image" />
+        <p id="lightbox-caption"></p>
+      </div>
+    </div>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 1000,
+        once: true,
+      });
+    </script>
+
+    <!-- Main Script -->
+    <script src="script.js"></script>
+    
+    <!-- Chat Bot Script -->
+    <script>
+      // Chat Bot Configuration
+      const chatbotResponses = {
+        greeting: [
+          "Hello! How can I help you today?",
+          "Hi there! I'm Arya's assistant. What would you like to know?",
+          "Welcome! Feel free to ask me about photography services, pricing, or portfolio."
+        ],
+        services: [
+          "I offer: Portrait Photography, Street Photography, Landscape Photography, Event Photography, and Product Photography.",
+          "My services include: Professional portraits, street photography, landscape shoots, event coverage, and commercial product photography.",
+          "Available services: Portrait sessions, street photography tours, landscape photography, event documentation, and product shoots."
+        ],
+        pricing: [
+          "Pricing varies based on project type: Portrait sessions start at $150, events at $300, and commercial projects are custom quoted.",
+          "Basic portrait session: $150, Event photography: Starting at $300/hour, Commercial projects: Custom pricing based on requirements.",
+          "Portrait photography starts at $150, event coverage at $300/hour. Contact me for a personalized quote!"
+        ],
+        booking: [
+          "To book a session: Contact me via WhatsApp (+6285750905756) or email (aryayusril@email.com). I usually respond within 24 hours.",
+          "Booking process: 1. Contact me 2. Discuss requirements 3. Schedule date 4. Confirm booking with deposit.",
+          "You can book through WhatsApp, email, or use the contact form on my website. I'll get back to you ASAP!"
+        ],
+        portfolio: [
+          "You can view my portfolio in the Gallery section above. I specialize in street, portrait, and landscape photography.",
+          "Check out my work in the Gallery! I have nature, portrait, and landscape collections available.",
+          "My portfolio includes street photography, portraits, and landscapes. Browse the Gallery section to see my best work."
+        ],
+        about: [
+          "I'm Arya Yusril, an Informatics student passionate about photography. I combine technical skills with creative vision.",
+          "I'm a photography enthusiast studying Informatics. I love capturing stories through my lens.",
+          "About me: Photography enthusiast, Informatics student, specializing in street and portrait photography."
+        ],
+        contact: [
+          "You can contact me via: WhatsApp: +6285750905756, Email: aryayusril@email.com, Instagram: @arya_yusril",
+          "Contact methods: WhatsApp, email, or Instagram. I'm available for inquiries and bookings.",
+          "Reach me at: WhatsApp (+6285750905756), email (aryayusril@email.com), or Instagram."
+        ],
+        default: [
+          "I'm not sure I understand. Could you rephrase that?",
+          "Can you ask about services, pricing, booking, or portfolio?",
+          "I can help with information about photography services, pricing, and booking. What would you like to know?"
+        ]
+      };
+
+      // Chat Bot Elements
+      const chatbotContainer = document.getElementById('chatbot-container');
+      const chatbotToggle = document.getElementById('chatbot-toggle');
+      const chatbotClose = document.getElementById('chatbot-close');
+      const chatbotBody = document.getElementById('chatbot-body');
+      const chatbotInput = document.getElementById('chatbot-input');
+      const chatbotSend = document.getElementById('chatbot-send');
+      const chatNotification = document.getElementById('chat-notification');
+      const quickResponseButtons = document.querySelectorAll('.quick-response-btn');
+
+      // Chat State
+      let isChatOpen = false;
+      let messages = [];
+
+      // Initialize chat with welcome message
+      addBotMessage("Hello! I'm Arya's photography assistant. How can I help you today? You can ask about services, pricing, booking, or view my portfolio.");
+
+      // Toggle Chat Visibility
+      chatbotToggle.addEventListener('click', () => {
+        isChatOpen = !isChatOpen;
+        if (isChatOpen) {
+          chatbotContainer.style.display = 'flex';
+          chatbotToggle.classList.add('active');
+          chatNotification.style.display = 'none';
+        } else {
+          chatbotContainer.style.display = 'none';
+          chatbotToggle.classList.remove('active');
+        }
+      });
+
+      // Close Chat
+      chatbotClose.addEventListener('click', () => {
+        isChatOpen = false;
+        chatbotContainer.style.display = 'none';
+        chatbotToggle.classList.remove('active');
+      });
+
+      // Send Message
+      chatbotSend.addEventListener('click', sendMessage);
+      chatbotInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+      });
+
+      // Quick Response Buttons
+      quickResponseButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const message = button.getAttribute('data-message');
+          chatbotInput.value = message;
+          sendMessage();
+        });
+      });
+
+      function sendMessage() {
+        const userMessage = chatbotInput.value.trim();
+        if (!userMessage) return;
+
+        // Add user message
+        addUserMessage(userMessage);
+        chatbotInput.value = '';
+
+        // Simulate typing delay
+        setTimeout(() => {
+          const botResponse = getBotResponse(userMessage.toLowerCase());
+          addBotMessage(botResponse);
+        }, 1000);
+      }
+
+      function addUserMessage(message) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'chat-message user-message';
+        messageDiv.innerHTML = `
+          <div class="message-content">
+            <strong>You:</strong> ${message}
+          </div>
+          <div class="message-time">${getCurrentTime()}</div>
+        `;
+        chatbotBody.appendChild(messageDiv);
+        scrollToBottom();
+        
+        // Store message
+        messages.push({ sender: 'user', content: message, time: getCurrentTime() });
+      }
+
+      function addBotMessage(message) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'chat-message bot-message';
+        messageDiv.innerHTML = `
+          <div class="message-content">
+            <strong>Arya's Assistant:</strong> ${message}
+          </div>
+          <div class="message-time">${getCurrentTime()}</div>
+        `;
+        chatbotBody.appendChild(messageDiv);
+        scrollToBottom();
+        
+        // Store message
+        messages.push({ sender: 'bot', content: message, time: getCurrentTime() });
+        
+        // Show notification if chat is closed
+        if (!isChatOpen) {
+          chatNotification.style.display = 'flex';
+        }
+      }
+
+      function getBotResponse(userMessage) {
+        // Check for keywords
+        if (userMessage.includes('hello') || userMessage.includes('hi') || userMessage.includes('hey')) {
+          return getRandomResponse(chatbotResponses.greeting);
+        } else if (userMessage.includes('service') || userMessage.includes('what do you offer')) {
+          return getRandomResponse(chatbotResponses.services);
+        } else if (userMessage.includes('price') || userMessage.includes('cost') || userMessage.includes('how much')) {
+          return getRandomResponse(chatbotResponses.pricing);
+        } else if (userMessage.includes('book') || userMessage.includes('schedule') || userMessage.includes('appointment')) {
+          return getRandomResponse(chatbotResponses.booking);
+        } else if (userMessage.includes('portfolio') || userMessage.includes('work') || userMessage.includes('gallery')) {
+          return getRandomResponse(chatbotResponses.portfolio);
+        } else if (userMessage.includes('about') || userMessage.includes('who are you')) {
+          return getRandomResponse(chatbotResponses.about);
+        } else if (userMessage.includes('contact') || userMessage.includes('email') || userMessage.includes('whatsapp')) {
+          return getRandomResponse(chatbotResponses.contact);
+        } else {
+          return getRandomResponse(chatbotResponses.default);
+        }
+      }
+
+      function getRandomResponse(responseArray) {
+        return responseArray[Math.floor(Math.random() * responseArray.length)];
+      }
+
+      function getCurrentTime() {
+        const now = new Date();
+        return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+      }
+
+      function scrollToBottom() {
+        chatbotBody.scrollTop = chatbotBody.scrollHeight;
+      }
+
+      // Auto-open chat after 10 seconds if not interacted
+      setTimeout(() => {
+        if (!isChatOpen && messages.length === 1) {
+          chatNotification.style.display = 'flex';
+        }
+      }, 10000);
+    </script>
+
+    <!-- Chat Bot & Footer CSS -->
+    <style>
+      /* Chat Bot Container */
+      .chatbot-container {
+        position: fixed;
+        bottom: 100px;
+        right: 40px;
+        width: 350px;
+        height: 500px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        z-index: 2000;
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid #e1e5eb;
+      }
+
+      .chatbot-header {
+        background: linear-gradient(135deg, #6c63ff 0%, #8a84ff 100%);
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .chatbot-header h4 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .chatbot-close {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        line-height: 1;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: background 0.3s;
+      }
+
+      .chatbot-close:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .chatbot-body {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        background: #f8f9fa;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .chat-message {
+        max-width: 80%;
+        padding: 12px 15px;
+        border-radius: 15px;
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+
+      .user-message {
+        background: #6c63ff;
+        color: white;
+        align-self: flex-end;
+        border-bottom-right-radius: 5px;
+      }
+
+      .bot-message {
+        background: white;
+        color: #333;
+        align-self: flex-start;
+        border: 1px solid #e1e5eb;
+        border-bottom-left-radius: 5px;
+      }
+
+      .message-content {
+        margin-bottom: 5px;
+      }
+
+      .message-time {
+        font-size: 0.7rem;
+        opacity: 0.7;
+        text-align: right;
+      }
+
+      .quick-responses {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .quick-response-btn {
+        background: white;
+        border: 1px solid #6c63ff;
+        color: #6c63ff;
+        padding: 8px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .quick-response-btn:hover {
+        background: #6c63ff;
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      .chatbot-input {
+        display: flex;
+        padding: 15px;
+        border-top: 1px solid #e1e5eb;
+        background: white;
+      }
+
+      .chatbot-input input {
+        flex: 1;
+        padding: 12px 15px;
+        border: 1px solid #e1e5eb;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border 0.3s;
+      }
+
+      .chatbot-input input:focus {
+        border-color: #6c63ff;
+      }
+
+      #chatbot-send {
+        background: #6c63ff;
+        color: white;
+        border: none;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        margin-left: 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+      }
+
+      #chatbot-send:hover {
+        background: #554fd8;
+        transform: scale(1.05);
+      }
+
+      /* Chat Bot Toggle Button */
+      .chatbot-toggle {
+        position: fixed;
+        bottom: 40px;
+        right: 40px;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #6c63ff 0%, #8a84ff 100%);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 1999;
+        box-shadow: 0 8px 25px rgba(108, 99, 255, 0.4);
+        transition: all 0.3s;
+      }
+
+      .chatbot-toggle:hover {
+        transform: scale(1.1);
+        box-shadow: 0 12px 35px rgba(108, 99, 255, 0.6);
+      }
+
+      .chatbot-toggle.active {
+        background: #554fd8;
+      }
+
+      .notification-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #ff4757;
+        color: white;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        font-size: 0.7rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        display: none;
+      }
+
+      /* Footer Styles */
+      footer {
+        text-align: center;
+        padding: 40px 20px;
+        background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent-color) 100%);
+        color: var(--text-white);
+        margin-top: 60px;
+      }
+
+      .footer-logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .footer-logo-img {
+        height: 50px;
+        width: auto;
+        object-fit: contain;
+        filter: brightness(0) invert(1);
+      }
+
+      .footer-brand {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+      }
+
+      .footer-brand-name {
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      .footer-brand-subtitle {
+        font-size: 0.8rem;
+        opacity: 0.9;
+        margin-top: 3px;
+      }
+
+      footer p {
+        opacity: 0.9;
+        font-size: 0.9rem;
+        margin: 5px 0;
+      }
+
+      .footer-sub {
+        font-size: 0.8rem;
+        opacity: 0.7;
+        margin-top: 10px;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .chatbot-container {
+          width: 90%;
+          right: 5%;
+          bottom: 80px;
+          height: 400px;
+        }
+
+        .chatbot-toggle {
+          bottom: 20px;
+          right: 20px;
+          width: 50px;
+          height: 50px;
+          font-size: 1.2rem;
+        }
+        
+        .footer-logo {
+          flex-direction: column;
+          gap: 10px;
+          text-align: center;
+        }
+        
+        .footer-brand {
+          text-align: center;
+        }
+        
+        .footer-logo-img {
+          height: 40px;
+        }
+      }
+    </style>
+  </body>
+</html>

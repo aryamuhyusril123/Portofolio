@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Login</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+        }
+        
+        .login-box {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            border-radius: 15px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        h2 {
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        
+        input {
+            display: block;
+            width: 100%;
+            margin: 15px 0;
+            padding: 12px 15px;
+            background: #f7f7f7;
+            border: 2px solid #e1e1e1;
+            border-radius: 8px;
+            color: #333;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus {
+            border-color: #667eea;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        input::placeholder {
+            color: #999;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .error-message {
+            color: #ff4757;
+            margin-top: 15px;
+            font-size: 14px;
+            min-height: 20px;
+        }
+        
+        .login-info {
+            color: #666;
+            font-size: 12px;
+            margin-top: 20px;
+            font-style: italic;
+        }
+        
+        @media (max-width: 480px) {
+            .login-box {
+                padding: 40px 25px;
+                margin: 20px;
+            }
+            
+            h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h2>PORTFOLIO LOGIN</h2>
+            <input type="text" id="user" placeholder="Username" required>
+            <input type="password" id="pass" placeholder="Password" required>
+            <button onclick="doLogin()">LOGIN</button>
+            <div class="error-message" id="errorMessage"></div>
+            <div class="login-info">Demo: username "admin" / password "123"</div>
+        </div>
+    </div>
+
+    <script>
+        function doLogin() {
+            const username = document.getElementById('user').value;
+            const password = document.getElementById('pass').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Reset error message
+            errorMessage.textContent = '';
+            
+            // Simple validation
+            if (username === '' || password === '') {
+                errorMessage.textContent = 'Please enter both username and password';
+                return;
+            }
+            
+            // Check credentials (demo purpose only)
+            if (username === 'admin' && password === '123') {
+                // Simulate login process
+                errorMessage.style.color = '#2ed573';
+                errorMessage.textContent = 'Login successful! Redirecting...';
+                
+                // Store login status
+                localStorage.setItem('isLoggedIn', 'true');
+                
+                // Redirect after short delay
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1000);
+            } else {
+                errorMessage.textContent = 'Invalid username or password. Please try again.';
+                // Shake animation for wrong credentials
+                document.querySelector('.login-box').style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    document.querySelector('.login-box').style.animation = '';
+                }, 500);
+            }
+        }
+        
+        // Allow pressing Enter to login
+        document.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                doLogin();
+            }
+        });
+        
+        // Add shake animation for wrong login
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
